@@ -6,8 +6,11 @@
 
 class CHRRom: public Rom {
 public:
-    CHRRom(std::string filename, std:: string outfilename): Rom(filename, outfilename) {
-        chr_bank_size  = header[5];
+    CHRRom(): Rom() {}
+
+    void loadRom(std::string filename) override {
+        Rom::loadRom(filename);
+        chr_bank_size = header[5];
         if (!chr_bank_size) {
             std::cerr << "No CHR ROM" << std::endl;
             err = true;
@@ -19,6 +22,7 @@ public:
             std::cerr << "Reading CHR-ROM file failed." << std::endl;
             err = true;
         }
+
     }
 
     CHRRom(const CHRRom&) = delete;

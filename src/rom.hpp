@@ -14,28 +14,33 @@
 
 class Rom {
 public:
-    Rom(std::string filename, std::string outfilename):
-        outfname(std::move(outfilename)),
-        err(false) {
-            romfile.open(filename, std::ios::in | std::ios::binary);
-            if (!romfile.is_open()) {
-                std::cerr << "Could not open rom file " << filename << std::endl;
-                err = true;
-            }
+    Rom():err(false) {}
 
-            header.resize(INES_HEADER_SIZE);
-            romfile.read(reinterpret_cast<char*>(header.data()), header.size());
+    virtual void loadRom(std::string filename) {
+        romfile.open(filename, std::ios::in | std::ios::binary);
+        if (!romfile.is_open()) {
+            std::cerr << "Could not open rom file " << filename << std::endl;
+            err = true;
+        }
+
+        header.resize(INES_HEADER_SIZE);
+        romfile.read(reinterpret_cast<char*>(header.data()), header.size());
             
-            if (header[0] != MAGIC0 || header[1] != MAGIC1 || header[2] != MAGIC2 || header[3] != MAGIC3) {
-                std::cerr << "Invalid NES rom file" << std::endl;
-                err = true;
-            }
-            prg_bank_size = header[4];
-            if (!prg_bank_size) {
-                std::cerr << "No PRG ROM" << std::endl;
-                err = true;
-            }
-        } 
+        if (header[0] != MAGIC0 || header[1] != MAGIC1 || header[2] != MAGIC2 || header[3] != MAGIC3) {
+            std::cerr << "Invalid NES rom file" << std::endl;
+            err = true;
+        }
+        prg_bank_size = header[4];
+        if (!prg_bank_size) {
+            std::cerr << "No PRG ROM" << std::endl;
+            err = true;
+        }
+    }
+
+    void setOutfile(std::string outfilename) {
+        outfname = std::move(outfilename);
+    }
+     
     ~Rom(){
         romfile.close();
     }

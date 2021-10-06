@@ -2,13 +2,8 @@
 #include "prgrom.hpp"
 #include "chrrom.hpp"
 
-enum class State : int {
-    PRG_ROM,
-    CHR_ROM
-};
 
 int main(int argc, char **argv) {
-    State state;
     std::string suffix;
     std::string outfn;
     std::string romfn;
@@ -21,17 +16,18 @@ int main(int argc, char **argv) {
     } else {
         for (int i = 1; i < argc; i++) {
             if (!std::strcmp(argv[i], "-p")) {
-                state = State::PRG_ROM;
+                rom = std::make_unique<PRGRom>();
             } else if (!std::strcmp(argv[i], "-c")) {
-                state = State::CHR_ROM;
+                rom = std::make_unique<CHRRom>();
             } else if (!std::strcmp(argv[i], "-o")) {
                 outfn = argv[i+1];
-                if (state == State::PRG_ROM) {
+                if (dynamic_cast<PRGRom*>(rom.get())) {
                     suffix = ".prg";
-                } else if (state == State::CHR_ROM) {
+                } else {
                     suffix = ".chr";
                 }
                 outfn.append(suffix);
+                rom->setOutfile(outfn);
             } else {
                 if (romfn.empty()) {
                     romfn = argv[i];
@@ -39,17 +35,7 @@ int main(int argc, char **argv) {
             }
         }
     }
-
-    switch (state) {
-        case State::PRG_ROM:
-            rom = std::make_unique<PRGRom>(romfn, outfn);
-            break;
-        case State::CHR_ROM:
-            rom = std::make_unique<CHRRom>(romfn, outfn);
-            break;
-        default:
-            break;
-    }
+    rom->loadRom(romfn);
     rom->save();
     return EXIT_SUCCESS;
 
