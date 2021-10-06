@@ -12,7 +12,7 @@ cd build
 
 ### Usage
 ```bash
-./nesx <rom file> [options]
+./nesrx <rom file> [options]
 options:
   -p   PRG ROM
   -c   CHR ROM
