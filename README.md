@@ -1,4 +1,4 @@
-# nesx
+# nesrx
 A small tool to extract PRG/CHR rom from NES/Famicom rom file
 
 ### Prerequisites
