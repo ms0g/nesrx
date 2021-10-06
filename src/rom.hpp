@@ -26,7 +26,7 @@ public:
             header.resize(INES_HEADER_SIZE);
             romfile.read(reinterpret_cast<char*>(header.data()), header.size());
             
-            if (header[0] != MAGIC0 && header[1] != MAGIC1 && header[2] != MAGIC2 && header[3] != MAGIC3) {
+            if (header[0] != MAGIC0 || header[1] != MAGIC1 || header[2] != MAGIC2 || header[3] != MAGIC3) {
                 std::cerr << "Invalid NES rom file" << std::endl;
                 err = true;
             }
