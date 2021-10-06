@@ -1,4 +1,4 @@
-# nesx
+# nesrx
 A small tool to extract PRG/CHR rom from NES/Famicom rom file
 
 ### Prerequisites
@@ -12,7 +12,7 @@ cd build
 
 ### Usage
 ```bash
-./nesx <rom file> [options]
+./nesrx <rom file> [options]
 options:
   -p   PRG ROM
   -c   CHR ROM
