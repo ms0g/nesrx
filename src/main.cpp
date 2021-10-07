@@ -19,6 +19,9 @@ int main(int argc, char **argv) {
         for (int i = 1; i < argc; i++) {
             if (!std::strcmp(argv[i], "-p")) {
                 rom = std::make_unique<PRGRom>();
+            } else if (!std::strcmp(argv[i], "-h")) {
+                std::cout << usage << std::endl;
+                return EXIT_SUCCESS;
             } else if (!std::strcmp(argv[i], "-c")) {
                 rom = std::make_unique<CHRRom>();
             } else if (!std::strcmp(argv[i], "-o")) {
