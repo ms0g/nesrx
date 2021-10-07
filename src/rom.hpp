@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <string>
 #include <iostream>
 #include <vector>
 
@@ -14,41 +15,41 @@
 
 class Rom {
 public:
-    Rom():err(false) {}
+    Rom():m_err(false) {}
 
     virtual void loadRom(std::string filename) {
-        romfile.open(filename, std::ios::in | std::ios::binary);
-        if (!romfile.is_open()) {
+        m_romfile.open(filename, std::ios::in | std::ios::binary);
+        if (!m_romfile.is_open()) {
             std::cerr << "Could not open rom file " << filename << std::endl;
-            err = true;
+            m_err = true;
         }
 
-        header.resize(INES_HEADER_SIZE);
-        romfile.read(reinterpret_cast<char*>(header.data()), header.size());
+        m_header.resize(INES_HEADER_SIZE);
+        m_romfile.read(reinterpret_cast<char*>(m_header.data()), m_header.size());
             
-        if (header[0] != MAGIC0 || header[1] != MAGIC1 || header[2] != MAGIC2 || header[3] != MAGIC3) {
+        if (m_header[0] != MAGIC0 || m_header[1] != MAGIC1 || m_header[2] != MAGIC2 || m_header[3] != MAGIC3) {
             std::cerr << "Invalid NES rom file" << std::endl;
-            err = true;
+            m_err = true;
         }
-        prg_bank_size = header[4];
-        if (!prg_bank_size) {
+        m_prg_bank_size = m_header[4];
+        if (!m_prg_bank_size) {
             std::cerr << "No PRG ROM" << std::endl;
-            err = true;
+            m_err = true;
         }
     }
 
     void setOutfile(std::string outfilename) {
-        outfname = std::move(outfilename);
+        m_outfname = std::move(outfilename);
     }
      
     ~Rom(){
-        romfile.close();
+        m_romfile.close();
     }
 
     void save(){
-        if (!err) {
-            std::ofstream ofile{outfname, std::ios::binary | std::ios::out};
-            ofile.write(reinterpret_cast<char*>(ext_rom.data()), ext_rom.size());
+        if (!m_err) {
+            std::ofstream ofile{m_outfname, std::ios::binary | std::ios::out};
+            ofile.write(reinterpret_cast<char*>(m_ext_rom.data()), m_ext_rom.size());
             ofile.close();
         }   
     }
@@ -56,11 +57,11 @@ public:
     Rom(const Rom&) = delete;
     Rom& operator=(const Rom&) = delete;
 
-    std::ifstream romfile;
-    std::vector<uint8_t> header;
-    std::vector<uint8_t> ext_rom;
-    uint8_t prg_bank_size;
-    bool err;
+    std::ifstream m_romfile;
+    std::vector<uint8_t> m_header;
+    std::vector<uint8_t> m_ext_rom;
+    uint8_t m_prg_bank_size;
+    bool m_err;
 private:
-    std::string outfname;
+    std::string m_outfname;
 };

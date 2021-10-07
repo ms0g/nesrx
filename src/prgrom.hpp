@@ -8,12 +8,12 @@ public:
 
     void loadRom(std::string filename) override {
         Rom::loadRom(filename);
-        std::cout << "16KB PRG-ROM Banks: " << +prg_bank_size << std::endl;
-        ext_rom.resize(PRG_ROM_SIZE * prg_bank_size);
-        romfile.seekg(INES_HEADER_SIZE);
-        if (!romfile.read(reinterpret_cast<char*>(ext_rom.data()), PRG_ROM_SIZE * prg_bank_size)) {
+        std::cout << "16KB PRG-ROM Banks: " << +m_prg_bank_size << std::endl;
+        m_ext_rom.resize(PRG_ROM_SIZE * m_prg_bank_size);
+        m_romfile.seekg(INES_HEADER_SIZE);
+        if (!m_romfile.read(reinterpret_cast<char*>(m_ext_rom.data()), PRG_ROM_SIZE * m_prg_bank_size)) {
             std::cerr << "Reading PRG-ROM file failed." << std::endl;
-            err = true;
+            m_err = true;
         }
 
     }
