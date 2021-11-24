@@ -42,7 +42,7 @@ public:
         m_outfname = std::move(outfilename);
     }
      
-    ~Rom(){
+    virtual ~Rom(){
         m_romfile.close();
     }
 
