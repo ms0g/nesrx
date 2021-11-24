@@ -14,7 +14,7 @@ public:
             m_romfile.seekg(INES_HEADER_SIZE);
             m_romfile.read(reinterpret_cast<char*>(m_ext_rom.data()), PRG_ROM_SIZE * m_prg_bank_size);
         }
-        catch (std::ifstream::failure e) {
+        catch (std::ifstream::failure &e) {
             std::cerr << "Reading PRG-ROM file failed: " << e.what() << std::endl;
         }
     }

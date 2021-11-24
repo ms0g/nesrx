@@ -34,7 +34,7 @@ public:
                 throw std::invalid_argument("No PRG ROM");
             
             }
-        } catch (std::ifstream::failure e) {
+        } catch (std::ifstream::failure &e) {
             std::cerr << "Exception opening/reading ROM file: " << e.what() << std::endl;
         }
     }
