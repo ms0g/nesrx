@@ -36,6 +36,7 @@ public:
             }
         } catch (std::ifstream::failure &e) {
             std::cerr << "Exception opening/reading ROM file: " << e.what() << std::endl;
+            exit(EXIT_FAILURE);
         }
     }
 
@@ -49,7 +50,7 @@ public:
 
     void save(){
         std::ofstream ofile{m_outfname, std::ios::binary | std::ios::out};
-        ofile.write(reinterpret_cast<char*>(m_ext_rom.data()), m_ext_rom.size());
+        ofile.write(reinterpret_cast<char*>(m_extracted_rom.data()), m_extracted_rom.size());
         ofile.close();
          
     }
@@ -59,7 +60,7 @@ public:
 
     std::ifstream m_romfile;
     std::vector<uint8_t> m_header;
-    std::vector<uint8_t> m_ext_rom;
+    std::vector<uint8_t> m_extracted_rom;
     uint8_t m_prg_bank_size;
 private:
     std::string m_outfname;

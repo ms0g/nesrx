@@ -40,8 +40,15 @@ int main(int argc, char **argv) {
             }
         }
     }
-    rom->loadRom(romfn);
-    rom->save();
+    
+    try {
+        rom->loadRom(romfn);
+        rom->save();
+    } catch (std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+  
     return EXIT_SUCCESS;
 
 }
