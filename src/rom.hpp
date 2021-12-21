@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 #include <iostream>
 #include <vector>
 
@@ -20,7 +21,7 @@ public:
         m_romfile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
 
-    virtual void loadRom(std::string filename) {
+    virtual void loadRom(std::string_view filename) {
         try {
             m_romfile.open(filename, std::ios::in | std::ios::binary);
             m_header.resize(INES_HEADER_SIZE);

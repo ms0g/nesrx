@@ -1,4 +1,5 @@
 #include <memory>
+#include <string_view>
 #include "prgrom.hpp"
 #include "chrrom.hpp"
 
@@ -6,7 +7,7 @@
 int main(int argc, char **argv) {
     std::string suffix;
     std::string outfn;
-    std::string romfn;
+    std::string_view romfn;
     std::unique_ptr<Rom> rom;
 
     static const char *usage = "Usage: nesrx <file> [OPTIONS]\n"

@@ -6,7 +6,7 @@ class PRGRom: public Rom {
 public:
     PRGRom(): Rom() {}
 
-    void loadRom(std::string filename) override {
+    void loadRom(std::string_view filename) override {
         try {
             Rom::loadRom(filename);
             std::cout << "16KB PRG-ROM Banks: " << m_prg_bank_size << std::endl;
