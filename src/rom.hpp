@@ -21,11 +21,11 @@ public:
         m_romfile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
 
-    virtual void loadRom(std::string_view filename) {
+    virtual void loadRom(const std::string_view& filename) {
         try {
             m_romfile.open(filename, std::ios::in | std::ios::binary);
             m_header.resize(INES_HEADER_SIZE);
-            m_romfile.read(reinterpret_cast<char*>(m_header.data()), m_header.size());
+            m_romfile.read(reinterpret_cast<char *>(m_header.data()), m_header.size());
                 
             if (m_header[0] != MAGIC0 || m_header[1] != MAGIC1 || m_header[2] != MAGIC2 || m_header[3] != MAGIC3) {
                 throw std::invalid_argument("Invalid NES rom file");

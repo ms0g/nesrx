@@ -26,8 +26,8 @@ int main(int argc, char **argv) {
             } else if (!std::strcmp(argv[i], "-c")) {
                 rom = std::make_unique<CHRRom>();
             } else if (!std::strcmp(argv[i], "-o")) {
-                outfn = argv[i+1];
-                if (dynamic_cast<PRGRom*>(rom.get())) {
+                outfn = argv[++i];
+                if (dynamic_cast<PRGRom *>(rom.get())) {
                     suffix = ".prg";
                 } else {
                     suffix = ".chr";

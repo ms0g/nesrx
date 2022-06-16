@@ -8,7 +8,7 @@ class CHRRom: public Rom {
 public:
     CHRRom(): Rom() {}
 
-    void loadRom(std::string_view filename) override {
+    void loadRom(const std::string_view& filename) override {
         try {
             Rom::loadRom(filename);
             m_chr_bank_size = m_header[5];
@@ -19,7 +19,7 @@ public:
             auto chr_rom_size = CHR_ROM_SIZE * m_chr_bank_size;
             m_extracted_rom.resize(chr_rom_size);
             m_romfile.seekg(INES_HEADER_SIZE + m_prg_bank_size * PRG_ROM_SIZE);
-            m_romfile.read(reinterpret_cast<char*>(m_extracted_rom.data()), chr_rom_size);
+            m_romfile.read(reinterpret_cast<char *>(m_extracted_rom.data()), chr_rom_size);
         }
         catch (std::ifstream::failure &e) {
             std::cerr << "Reading CHR-ROM file failed: " << e.what() << std::endl;
