@@ -12,9 +12,14 @@ cd build
 
 ### Usage
 ```bash
-./nesrx <rom file> [options]
-options:
-  -p   PRG ROM
-  -c   CHR ROM
-  -o   output file name
+➜  ~ ./nesrx -h
+Usage:  nesrx [ -<flag> [<val>] | --<name> [<val>] ]... <rom file>
+
+   -p, --prg-rom              PRG ROM
+   -c, --chr-rom              CHR ROM
+   -o  --outfile              Output rom file
+   -h, --help                 display usage information and exit
+   -v, --version              display version information and exit
+   
+➜  ~ ./nesrx -p -o code.prg 
 ```
