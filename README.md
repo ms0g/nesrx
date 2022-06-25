@@ -1,5 +1,5 @@
 # nesrx
-A small tool to extract PRG/CHR rom from NES/Famicom rom file
+A small tool to extract PRG/CHR ROM from NES/Famicom ROM file
 
 ### Prerequisites
 + [CMake](http://www.cmake.org "CMake project page") (>= 3.17)
@@ -21,5 +21,5 @@ Usage:  nesrx [ -<flag> [<val>] | --<name> [<val>] ]... <rom file>
    -h, --help                 display usage information and exit
    -v, --version              display version information and exit
    
-➜  ~ ./nesrx -p -o code.prg 
+➜  ~ ./nesrx -p -o code.prg example.nes
 ```
