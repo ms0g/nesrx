@@ -41,8 +41,8 @@ public:
         }
     }
 
-    void setOutfile(std::string outfilename) {
-        m_outfname = std::move(outfilename);
+    void setOutfile(std::string& outfilename) {
+        m_outfname = outfilename.c_str();
     }
      
     virtual ~Rom(){
@@ -64,5 +64,5 @@ public:
     std::vector<uint8_t> m_extracted_rom;
     uint8_t m_prg_bank_size;
 private:
-    std::string m_outfname;
+    std::string_view m_outfname;
 };

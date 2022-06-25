@@ -5,9 +5,9 @@
 
 
 int main(int argc, char **argv) {
-    std::string suffix;
-    std::string outfn;
+    std::string_view suffix;
     std::string_view romfn;
+    std::string outfn;
     std::unique_ptr<Rom> rom;
 
     static const char *usage = "Usage: nesrx <file> [OPTIONS]\n"
