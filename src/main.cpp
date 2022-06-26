@@ -14,9 +14,8 @@
 
 
 int main(int argc, char **argv) {
-    std::string_view suffix;
     std::string_view romfn;
-    std::string outfn;
+    std::string_view outfn;
     std::unique_ptr<Rom> rom;
 
     static const char *usage = "Usage:  nesrx [ -<flag> [<val>] | --<name> [<val>] ]... <rom file>\n\n   "

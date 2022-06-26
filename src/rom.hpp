@@ -21,7 +21,7 @@ public:
         m_romfile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
 
-    virtual void loadRom(const std::string_view& filename) {
+    virtual void loadRom(const std::string_view filename) {
         try {
             m_romfile.open(filename, std::ios::in | std::ios::binary);
             m_header.resize(INES_HEADER_SIZE);
@@ -41,8 +41,8 @@ public:
         }
     }
 
-    void setOutfile(std::string& outfilename) {
-        m_outfname = outfilename.c_str();
+    void setOutfile(std::string_view outfile) {
+        m_outfile = outfile;
     }
      
     virtual ~Rom(){
@@ -50,7 +50,7 @@ public:
     }
 
     void save(){
-        std::ofstream ofile{m_outfname, std::ios::binary | std::ios::out};
+        std::ofstream ofile{m_outfile, std::ios::binary | std::ios::out};
         ofile.write(reinterpret_cast<char*>(m_extracted_rom.data()), m_extracted_rom.size());
         ofile.close();
          
@@ -64,5 +64,5 @@ public:
     std::vector<uint8_t> m_extracted_rom;
     uint8_t m_prg_bank_size;
 private:
-    std::string_view m_outfname;
+    std::string_view m_outfile;
 };

@@ -8,7 +8,7 @@ class CHRRom: public Rom {
 public:
     CHRRom(): Rom() {}
 
-    void loadRom(const std::string_view& filename) override {
+    void loadRom(const std::string_view filename) override {
         try {
             Rom::loadRom(filename);
             m_chr_bank_size = m_header[5];
