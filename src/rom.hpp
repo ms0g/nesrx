@@ -25,17 +25,16 @@ public:
         try {
             m_romfile.open(filename, std::ios::in | std::ios::binary);
             m_header.resize(INES_HEADER_SIZE);
-            m_romfile.read(reinterpret_cast<char *>(m_header.data()), m_header.size());
-                
+            m_romfile.read(reinterpret_cast<char*>(m_header.data()), m_header.size());
+
             if (m_header[0] != MAGIC0 || m_header[1] != MAGIC1 || m_header[2] != MAGIC2 || m_header[3] != MAGIC3) {
                 throw std::invalid_argument("Invalid NES rom file");
             }
             m_prg_bank_size = m_header[4];
             if (!m_prg_bank_size) {
                 throw std::invalid_argument("No PRG ROM");
-            
             }
-        } catch (std::ifstream::failure &e) {
+        } catch (std::ifstream::failure& e) {
             std::cerr << "Exception opening/reading ROM file: " << e.what() << std::endl;
             exit(EXIT_FAILURE);
         }
@@ -44,25 +43,26 @@ public:
     void setOutfile(std::string_view outfile) {
         m_outfile = outfile;
     }
-     
-    virtual ~Rom(){
+
+    virtual ~Rom() {
         m_romfile.close();
     }
 
-    void save(){
+    void save() {
         std::ofstream ofile{m_outfile, std::ios::binary | std::ios::out};
         ofile.write(reinterpret_cast<char*>(m_extracted_rom.data()), m_extracted_rom.size());
         ofile.close();
-         
+
     }
 
     Rom(const Rom&) = delete;
+
     Rom& operator=(const Rom&) = delete;
 
     std::ifstream m_romfile;
     std::vector<uint8_t> m_header;
     std::vector<uint8_t> m_extracted_rom;
-    uint8_t m_prg_bank_size;
+    uint8_t m_prg_bank_size{};
 private:
     std::string_view m_outfile;
 };
